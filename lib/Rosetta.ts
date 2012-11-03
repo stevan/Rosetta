@@ -1,7 +1,14 @@
 
 module Rosetta {
 
-    // define the interfaces here
+    // DOM
+
+    export interface INodeStatic {
+        new    ( selector : any    ): INode;
+        create ( html     : string ): INode;
+        one    ( selector : string ): INode;
+        all    ( selector : string, filter? : string ): INodeList;
+    }
 
     export interface INode {
 
@@ -80,6 +87,8 @@ module Rosetta {
         filter ( fn : ( n : INode ) => bool  ): INodeList;
     }
 
+    // AJAX
+
     export interface IAJAXOptions {
         url      : string;
         method?  : string;
@@ -94,6 +103,10 @@ module Rosetta {
             failure?  : Function;
             end?      : Function;
         };
+    }
+
+    export interface IAJAXStatic {
+        new ( options : IAJAXOptions ): IAJAX;
     }
 
     export interface IAJAX {
