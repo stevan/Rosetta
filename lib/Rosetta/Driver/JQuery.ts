@@ -115,21 +115,6 @@ module Rosetta {
                 css ( attribute : any ): any {
                     return this.e.css( attribute );
                 }
-
-                height(): number { return this.e.height() }
-                width(): number { return this.e.width() }
-
-                inner_height(): number { return this.e.innerHeight() }
-                inner_width(): number { return this.e.innerWidth() }
-
-                outer_height(): number { return this.e.outerHeight() }
-                outer_width(): number { return this.e.outerWidth() }
-
-                offset(): number;
-                offset( props: Object ): void;
-                offset ( props? : any ): any {
-                    return this.e.offset( props );
-                }
             }
 
             export class NodeList implements Rosetta.INodeList {

@@ -66,19 +66,6 @@ module Rosetta {
             // css manipulation
             css ( attributes : Object ): void;
             css ( attribute : string ): string;
-
-            // information about the current node
-            height(): number;
-            width(): number;
-
-            inner_height(): number;
-            inner_width(): number;
-
-            outer_height(): number;
-            outer_width(): number;
-
-            offset(): number;
-            offset( props: Object ): void;
         }
 
         export interface INodeList {
@@ -192,21 +179,6 @@ module Rosetta {
             css ( attribute : string ): string;
             css ( attribute : any ): any {
                 return this.driver.css( attribute );
-            }
-
-            height(): number { return this.driver.height() }
-            width(): number { return this.driver.width() }
-
-            inner_height(): number { return this.driver.inner_height() }
-            inner_width(): number { return this.driver.inner_width() }
-
-            outer_height(): number { return this.driver.outer_height() }
-            outer_width(): number { return this.driver.outer_width() }
-
-            offset(): number;
-            offset( props: Object ): void;
-            offset ( props? : any ): any {
-                return this.driver.offset( props );
             }
         }
 
