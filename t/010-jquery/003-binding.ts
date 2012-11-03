@@ -1,9 +1,9 @@
 
-test( "Rosetta.JQuery - binding test", () => {
+test( "Rosetta.JQuery.Node - binding test", () => {
 
     var test_container_prefix = '#testing #003-binding ';
 
-    var n = new Rosetta.Node( Rosetta.JQuery, test_container_prefix + '#test' );
+    var n = new Rosetta.JQuery.Node( test_container_prefix + '#test' );
 
     var clicked = 0;
     var clicker = () => { clicked++ };

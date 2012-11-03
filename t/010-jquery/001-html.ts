@@ -1,10 +1,10 @@
 
-test( "Rosetta.JQuery - html/text/val test", () => {
+test( "Rosetta.JQuery.Node - html/text/val test", () => {
 
     var test_container_prefix = '#testing #001-html ';
 
     (() => {
-        var n = new Rosetta.Node( Rosetta.JQuery, test_container_prefix + '#test' );
+        var n = new Rosetta.JQuery.Node( test_container_prefix + '#test' );
 
         equal( n.html(), 'test', '... got the right value from html()' );
         equal( n.text(), 'test', '... got the right value from text()' );
@@ -12,7 +12,7 @@ test( "Rosetta.JQuery - html/text/val test", () => {
     })();
 
     (() => {
-        var n = new Rosetta.Node( Rosetta.JQuery, test_container_prefix + '#test_val' );
+        var n = new Rosetta.JQuery.Node( test_container_prefix + '#test_val' );
 
         equal( n.html(), '', '... got the right value from html()' );
         equal( n.text(), '', '... got the right value from text()' );
@@ -20,7 +20,7 @@ test( "Rosetta.JQuery - html/text/val test", () => {
     })();
 
     (() => {
-        var n = Rosetta.Node.create( Rosetta.JQuery, '<div>foo</div>' );
+        var n = Rosetta.JQuery.Node.create(  '<div>foo</div>' );
 
         equal( n.html(), 'foo', '... got the right value from html()' );
         equal( n.text(), 'foo', '... got the right value from text()' );
@@ -28,7 +28,7 @@ test( "Rosetta.JQuery - html/text/val test", () => {
     })();
 
     (() => {
-        var n = Rosetta.Node.create( Rosetta.JQuery, '<input type="radio" value="foo" />' );
+        var n = Rosetta.JQuery.Node.create(  '<input type="radio" value="foo" />' );
 
         equal( n.html(), '', '... got the right value from html()' );
         equal( n.text(), '', '... got the right value from text()' );
@@ -36,7 +36,7 @@ test( "Rosetta.JQuery - html/text/val test", () => {
     })();
 
     (() => {
-        var n = Rosetta.Node.one( Rosetta.JQuery, test_container_prefix + '#test' );
+        var n = Rosetta.JQuery.Node.one( test_container_prefix + '#test' );
 
         equal( n.html(), 'test', '... got the right value from html()' );
         equal( n.text(), 'test', '... got the right value from text()' );
@@ -44,7 +44,7 @@ test( "Rosetta.JQuery - html/text/val test", () => {
     })();
 
     (() => {
-        var n = Rosetta.Node.one( Rosetta.JQuery, test_container_prefix + '#test_val' );
+        var n = Rosetta.JQuery.Node.one( test_container_prefix + '#test_val' );
 
         equal( n.html(), '', '... got the right value from html()' );
         equal( n.text(), '', '... got the right value from text()' );
@@ -52,7 +52,7 @@ test( "Rosetta.JQuery - html/text/val test", () => {
     })();
 
     (() => {
-        var n = Rosetta.Node.all( Rosetta.JQuery, test_container_prefix + '#test' );
+        var n = Rosetta.JQuery.Node.all( test_container_prefix + '#test' );
 
         equal( n.get(0).html(), 'test', '... got the right value from html()' );
         equal( n.get(0).text(), 'test', '... got the right value from text()' );
@@ -60,7 +60,7 @@ test( "Rosetta.JQuery - html/text/val test", () => {
     })();
 
     (() => {
-        var n = Rosetta.Node.all( Rosetta.JQuery, test_container_prefix + '#test_val' );
+        var n = Rosetta.JQuery.Node.all( test_container_prefix + '#test_val' );
 
         equal( n.get(0).html(), '', '... got the right value from html()' );
         equal( n.get(0).text(), '', '... got the right value from text()' );
