@@ -128,6 +128,10 @@ module Rosetta {
                     this.length = nodes.length;
                 }
 
+                get ( index : number ): Rosetta.INode {
+                    return this.nodes[ index ];
+                }
+
                 each ( fn : ( n : Rosetta.INode ) => void ): void {
                     this.nodes.map( fn );
                 }

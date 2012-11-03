@@ -70,6 +70,7 @@ module Rosetta {
 
         export interface INodeList {
             length : number;
+            get    ( index : number ): INode;
             each   ( fn : ( n : INode ) => void  ): void;
             filter ( fn : ( n : INode ) => bool  ): INodeList;
             map    ( fn : ( n : INode ) => INode ): INodeList;
