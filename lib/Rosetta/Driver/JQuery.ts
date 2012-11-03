@@ -21,24 +21,24 @@ module Rosetta {
                     return new Node( jQuery( selector ) );
                 }
 
-                static all ( selector : string ): Rosetta.INodeList {
-                    var nodes : Rosetta.INode[] = [];
-                    jQuery( selector ).each(function () {
-                        nodes.push( new Node( this ) );
-                    });
-                    return new NodeList( nodes );
+                static all ( selector : string, filter? : string ): Rosetta.INodeList {
+                    var e = jQuery( selector );
+                    if ( filter != undefined ) { e = e.filter( filter ) }
+                    return new NodeList( e.map( ( idx, node ) => { return new Node( node ) } ).get() );
+                }
+
+                clone ( with_events? : bool = false ): Rosetta.INode {
+                    return new Node( this.e.clone( with_events ) );
                 }
 
                 find_one ( selector : string ): Rosetta.INode {
                     return new Node( this.e.find( selector ) );
                 }
 
-                find_all ( selector : string ): Rosetta.INodeList  {
-                    var nodes : Rosetta.INode[] = [];
-                    this.e.find( selector ).each(function () {
-                        nodes.push( new Node( this ) );
-                    });
-                    return new NodeList( nodes );
+                find_all ( selector : string, filter? : string ): Rosetta.INodeList  {
+                    var e = this.e.find( selector );
+                    if ( filter != undefined ) { e = e.filter( filter ) }
+                    return new NodeList( e.map( ( idx, node ) => { return new Node( node ) } ).get() );
                 }
 
                 html ( text? : string ): string { return text != undefined ? this.e.html( text ) : this.e.html() }
@@ -63,31 +63,24 @@ module Rosetta {
                 empty (): void { this.e.empty() }
 
                 siblings ( selector? : string ): Rosetta.INodeList {
-                    var nodes : Rosetta.INode[] = [];
-                    if ( selector == undefined ) {
-                        this.e.siblings().each(function () {
-                            nodes.push( new Node( this ) );
-                        });
-                    }
-                    else {
-                        this.e.siblings( selector ).each(function () {
-                            nodes.push( new Node( this ) );
-                        });
-                    }
-                    return new NodeList( nodes );
+                    var e = ( selector == undefined )
+                        ? this.e.siblings()
+                        : this.e.siblings( selector );
+                    return new NodeList( e.map( ( idx, node ) => { return new Node( node ) } ).get() );
                 }
 
-                next ( selector? : string ): Rosetta.INode { return new Node( selector != undefined ? this.e.next( selector ) : this.e.next() ) }
-                prev ( selector? : string ): Rosetta.INode { return new Node( selector != undefined ? this.e.prev( selector ) : this.e.prev() ) }
+                next ( selector? : string ): Rosetta.INode {
+                    return new Node( selector != undefined ? this.e.next( selector ) : this.e.next() )
+                }
+
+                prev ( selector? : string ): Rosetta.INode {
+                    return new Node( selector != undefined ? this.e.prev( selector ) : this.e.prev() )
+                }
 
                 parent (): Rosetta.INode { return new Node( this.e.parent() ) }
 
                 children (): Rosetta.INodeList {
-                    var nodes : Rosetta.INode[] = [];
-                    this.e.children().each(function () {
-                        nodes.push( new Node( this ) );
-                    });
-                    return new NodeList( nodes );
+                    return new NodeList( this.e.children().map( ( idx, node ) => { return new Node( node ) } ).get() );
                 }
 
                 ancestor ( selector : string ): Rosetta.INode {

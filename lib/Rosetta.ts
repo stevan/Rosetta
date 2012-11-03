@@ -10,10 +10,13 @@ module Rosetta {
             // the actual instance
             e : any;
 
+            // clone the object and DOM
+            clone ( with_events? : bool ): INode;
+
             // find first sub-node
             find_one ( selector : string ): INode;
             // find multiple sub-nodes
-            find_all ( selector : string ): INodeList;
+            find_all ( selector : string, filter? : string ): INodeList;
 
             // extract data from the node
             html ( text? : string ): string;
@@ -23,7 +26,7 @@ module Rosetta {
             // get/set the attributes of the node
             attr ( key : string, value? : any ): any;
 
-            // append the node to to the parent (the invocant)
+            // append the node to the invocant
             append ( node : INode ): void;
 
             // remove the node from its parent
@@ -75,8 +78,8 @@ module Rosetta {
             length : number;
             get    ( index : number ): INode;
             each   ( fn : ( n : INode ) => void  ): void;
-            filter ( fn : ( n : INode ) => bool  ): INodeList;
             map    ( fn : ( n : INode ) => INode ): INodeList;
+            filter ( fn : ( n : INode ) => bool  ): INodeList;
         }
 
         export interface IAJAXOptions {
@@ -132,15 +135,17 @@ module Rosetta {
                 }
             }
 
-            static all ( driver : string, selector : string ): INodeList {
+            static all ( driver : string, selector : string, filter? : string ): INodeList {
                 switch ( driver.toLowerCase() ) {
                     case 'jquery' : return Rosetta.Driver.JQuery.Node.all( selector );
                     //case 'yui'    : return Rosetta.Driver.YUI.all( html );
                 }
             }
 
+            clone ( with_events? : bool = false ): INode { return this.driver.clone( with_events ) }
+
             find_one ( selector : string ): INode { return this.driver.find_one( selector ) }
-            find_all ( selector : string ): INodeList  { return this.driver.find_all( selector ) }
+            find_all ( selector : string, filter? : string ): INodeList  { return this.driver.find_all( selector, filter ) }
 
             html ( text? : string ): string { return this.driver.html( text ) }
             text ( text? : string ): string { return this.driver.text( text ) }
