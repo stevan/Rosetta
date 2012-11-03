@@ -1,10 +1,16 @@
+/// <reference path="../lib/Rosetta/Driver/JQuery.ts" />
+
 module Rosetta {
 
-        export interface Node {
+        export interface INode {
+
+            // the actual instance
+            e : any;
+
             // find first sub-node
-            find_one ( selector : string ): Node;
+            find_one ( selector : string ): INode;
             // find multiple sub-nodes
-            find_all ( selector : string ): NodeList;
+            find_all ( selector : string ): INodeList;
 
             // extract data from the node
             html ( text? : string ): string;
@@ -15,7 +21,7 @@ module Rosetta {
             attr ( key : string, value? : any ): any;
 
             // append the node to to the parent (the invocant)
-            append ( node : Node ): void;
+            append ( node : INode ): void;
 
             // remove the node from its parent
             remove (): void;
@@ -24,23 +30,23 @@ module Rosetta {
             empty (): void;
 
             // finds all siblings
-            siblings ( selector? : string ): NodeList;
+            siblings ( selector? : string ): INodeList;
 
             // finding the next and previous
-            next ( selector? : string ): Node;
-            prev ( selector? : string ): Node;
+            next ( selector? : string ): INode;
+            prev ( selector? : string ): INode;
 
             // get parent
-            parent (): Node;
+            parent (): INode;
 
             // get children
-            children (): NodeList;
+            children (): INodeList;
 
             // get nearest matching ancestor
-            ancestor ( selector? : string ): Node;
+            ancestor ( selector : string ): INode;
 
             // is a node contained within the invocant
-            contains ( descendent : Node ): bool;
+            contains ( descendent : INode ): bool;
 
             // simple show/hide of nodes
             show (): void;
@@ -75,21 +81,14 @@ module Rosetta {
             offset( props: Object ): void;
         }
 
-        declare var Node : {
-            new ( selector : string ): Node;
-            create ( html : string ): Node;
-            one ( selector : string ): Node;
-            all ( selector : string ): NodeList;
+        export interface INodeList {
+            length : number;
+            each   ( fn : ( n : INode ) => void  ): void;
+            filter ( fn : ( n : INode ) => bool  ): INodeList;
+            map    ( fn : ( n : INode ) => INode ): INodeList;
         }
 
-        export interface NodeList {
-            length : bool;
-            each   ( fn : ( n : Node ) => void ): void;
-            filter ( fn : ( n : Node ) => bool ): NodeList;
-            map    ( fn : ( n : Node ) => Node ): NodeList;
-        }
-
-        export interface AJAXOptions {
+        export interface IAJAXOptions {
             url      : string;
             method?  : string;
             headers? : Object;
@@ -105,8 +104,128 @@ module Rosetta {
             };
         }
 
-        export interface AJAX {
-            ( options : AJAXOptions ): void;
+        export interface IAJAX {
+            exec (): void;
+        }
+
+        // implementations ...
+
+        export class Node implements INode {
+
+            public e : any;
+            private driver : INode;
+
+            constructor ( driver : string, selector : any ) {
+                switch ( driver.toLowerCase() ) {
+                    case 'jquery':
+                        this.driver = new Rosetta.Driver.JQuery.Node ( selector );
+                        break;
+                    case 'yui':
+                        //this.driver = new Rosetta.Driver.YUI.Node ( selector );
+                        break;
+                }
+                this.e = this.driver.e;
+            }
+
+            static create ( driver : string, html : string ): INode {
+                switch ( driver.toLowerCase() ) {
+                    case 'jquery' : return Rosetta.Driver.JQuery.Node.create( html );
+                    //case 'yui'    : return Rosetta.Driver.YUI.create( html );
+                }
+            }
+
+            static one ( driver : string, selector : string ): INode {
+                switch ( driver.toLowerCase() ) {
+                    case 'jquery' : return Rosetta.Driver.JQuery.Node.one( selector );
+                    //case 'yui'    : return Rosetta.Driver.YUI.one( html );
+                }
+            }
+
+            static all ( driver : string, selector : string ): INodeList {
+                switch ( driver.toLowerCase() ) {
+                    case 'jquery' : return Rosetta.Driver.JQuery.Node.all( selector );
+                    //case 'yui'    : return Rosetta.Driver.YUI.all( html );
+                }
+            }
+
+            find_one ( selector : string ): INode { return this.driver.find_one( selector ) }
+            find_all ( selector : string ): INodeList  { return this.driver.find_all( selector ) }
+
+            html ( text? : string ): string { return this.driver.html( text ) }
+            text ( text? : string ): string { return this.driver.text( text ) }
+            val  ( text? : string ): string { return this.driver.val( text )  }
+
+            attr ( key : string, value? : any ): any { return this.driver.attr( key, value ) }
+
+            append ( node : INode ): void { this.driver.append( node ) }
+
+            remove (): void { this.driver.remove() }
+
+            empty (): void { this.driver.empty() }
+
+            siblings ( selector? : string ): INodeList { return this.driver.siblings( selector ) }
+
+            next ( selector? : string ): INode { return this.driver.next( selector ) }
+            prev ( selector? : string ): INode { return this.driver.prev( selector ) }
+
+            parent (): INode { return this.driver.parent() }
+
+            children (): INodeList { return this.driver.children() }
+
+            ancestor ( selector : string ): INode { return this.driver.ancestor( selector ) }
+
+            contains ( descendent : INode ): bool { return this.driver.contains( descendent ) }
+
+            show (): void { this.driver.show() }
+            hide (): void { this.driver.hide() }
+
+            bind    ( event : string, callback : Function ): void { this.driver.bind( event, callback ) }
+            unbind  ( event : string, callback : Function ): void { this.driver.unbind( event, callback ) }
+            trigger ( event : string ): void { this.driver.trigger( event ) }
+
+            remove_class ( selector : string ): void { this.driver.remove_class( selector ) }
+            add_class    ( selector : string ): void { this.driver.add_class( selector ) }
+            toggle_class ( selector : string ): void { this.driver.toggle_class( selector ) }
+            has_class    ( selector : string ): bool { return this.driver.has_class( selector ) }
+
+            css ( attributes : Object ): void;
+            css ( attribute : string ): string;
+            css ( attribute : any ): any {
+                return this.driver.css( attribute );
+            }
+
+            height(): number { return this.driver.height() }
+            width(): number { return this.driver.width() }
+
+            inner_height(): number { return this.driver.inner_height() }
+            inner_width(): number { return this.driver.inner_width() }
+
+            outer_height(): number { return this.driver.outer_height() }
+            outer_width(): number { return this.driver.outer_width() }
+
+            offset(): number;
+            offset( props: Object ): void;
+            offset ( props? : any ): any {
+                return this.driver.offset( props );
+            }
+        }
+
+        export class AJAX implements IAJAX {
+
+            private driver : IAJAX;
+
+            constructor ( driver : string, options : IAJAXOptions ) {
+                switch ( driver.toLowerCase() ) {
+                    case 'jquery':
+                        this.driver = new Rosetta.Driver.JQuery.AJAX ( options );
+                        break;
+                    case 'yui':
+                        //this.driver = new Rosetta.Driver.YUI.AJAX ( options );
+                        break;
+                }
+            }
+
+            exec (): void { this.driver.exec() }
         }
 
 }
