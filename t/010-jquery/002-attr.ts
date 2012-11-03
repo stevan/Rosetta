@@ -1,6 +1,6 @@
 test( "Rosetta.JQuery - attr test", () => {
 
-    var n = new Rosetta.Node( 'jquery', '#testing #test' );
+    var n = new Rosetta.Node( Rosetta.JQuery, '#testing #test' );
 
     equal( n.attr('align'), 'center', '... got the align attr right' );
     n.attr( 'align', 'left' );

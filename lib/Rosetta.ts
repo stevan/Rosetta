@@ -2,6 +2,9 @@
 
 module Rosetta {
 
+        export var JQuery : string = 'jquery';
+        export var YUI    : string = 'yui';
+
         export interface INode {
 
             // the actual instance

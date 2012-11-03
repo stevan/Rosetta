@@ -1,7 +1,7 @@
 
 test( "Rosetta.JQuery - binding test", () => {
 
-    var n = new Rosetta.Node( 'jquery', '#testing #test' );
+    var n = new Rosetta.Node( Rosetta.JQuery, '#testing #test' );
 
     var clicked = 0;
     var clicker = () => { clicked++ };
