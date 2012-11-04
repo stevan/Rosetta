@@ -18,7 +18,8 @@ module Rosetta {
                 if ( selector.indexOf(':first') == -1 ) {
                     selector += ':first';
                 }
-                return new Node( jQuery( selector ) );
+                var e = jQuery( selector );
+                return e.length == 0 ? null : new Node( e );
             }
 
             static all ( selector : string, filter? : string ): Rosetta.INodeList {
@@ -32,7 +33,8 @@ module Rosetta {
             }
 
             find_one ( selector : string ): Rosetta.INode {
-                return new Node( this.e.find( selector ) );
+                var e = this.e.find( selector );
+                return e.length == 0 ? null : new Node( e );
             }
 
             find_all ( selector : string, filter? : string ): Rosetta.INodeList  {
@@ -70,11 +72,13 @@ module Rosetta {
             }
 
             next ( selector? : string ): Rosetta.INode {
-                return new Node( selector != undefined ? this.e.next( selector ) : this.e.next() )
+                var e = selector != undefined ? this.e.next( selector ) : this.e.next();
+                return e.length == 0 ? null : new Node( e );
             }
 
             prev ( selector? : string ): Rosetta.INode {
-                return new Node( selector != undefined ? this.e.prev( selector ) : this.e.prev() )
+                var e = selector != undefined ? this.e.prev( selector ) : this.e.prev();
+                return e.length == 0 ? null : new Node( e );
             }
 
             index (): number { return this.e.index() }
@@ -86,7 +90,8 @@ module Rosetta {
             }
 
             ancestor ( selector : string ): Rosetta.INode {
-                return new Node( this.e.closest( selector ) )
+                var e = this.e.closest( selector );
+                return e.length ==0 ? null : new Node( e )
             }
 
             contains ( descendent : Rosetta.INode ): bool {
