@@ -47,6 +47,9 @@ module Rosetta {
         next ( selector? : string ): INode;
         prev ( selector? : string ): INode;
 
+        // the index of the node within the siblings
+        index (): number;
+
         // get parent
         parent (): INode;
 

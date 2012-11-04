@@ -77,6 +77,8 @@ module Rosetta {
                 return new Node( selector != undefined ? this.e.prev( selector ) : this.e.prev() )
             }
 
+            index (): number { return this.e.index() }
+
             parent (): Rosetta.INode { return new Node( this.e.parent() ) }
 
             children (): Rosetta.INodeList {
