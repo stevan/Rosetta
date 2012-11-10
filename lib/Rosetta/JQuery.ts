@@ -1,3 +1,4 @@
+/// <reference path="../../shared/jquery.d.ts" />
 
 module Rosetta {
     export module JQuery {
