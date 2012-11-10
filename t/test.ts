@@ -7,3 +7,4 @@
 /// <reference path="010-jquery/001-html.ts" />
 /// <reference path="010-jquery/002-attr.ts" />
 /// <reference path="010-jquery/003-binding.ts" />
+/// <reference path="010-jquery/004-traversing.ts" />
