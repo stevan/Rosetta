@@ -8,6 +8,7 @@ module Rosetta {
         create ( html     : string ): INode;
         one    ( selector : string ): INode;
         all    ( selector : string, filter? : string ): INodeList;
+        ready  ( callback : () => void ): void;
     }
 
     export interface INode {

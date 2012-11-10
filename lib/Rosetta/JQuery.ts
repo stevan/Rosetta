@@ -10,6 +10,10 @@ module Rosetta {
                 this.e = jQuery( selector );
             }
 
+            static ready ( callback : () => void ): void {
+                jQuery().ready( callback );
+            }
+
             static create ( html : string ): Rosetta.INode {
                 return new Node( jQuery( html ) );
             }
