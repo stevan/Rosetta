@@ -95,7 +95,7 @@ module Rosetta {
             }
 
             contains ( descendent : Rosetta.INode ): bool {
-                return jQuery.contains( this.e, descendent.e );
+                return jQuery.contains( this.e[0], descendent.e[0] );
             }
 
             show (): void { this.e.show() }
