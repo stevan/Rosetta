@@ -14,9 +14,21 @@ test( "Rosetta.JQuery.Node - binding test", () => {
     n.trigger( 'click' );
     equal( clicked, 1, '... one click' );
 
+    var n2 = n.clone( true );
+    var n3 = n.clone();
+
+    n2.trigger( 'click' );
+    equal( clicked, 2, '... two clicks' );
+
+    n3.trigger( 'click' );
+    equal( clicked, 2, '... (still) two clicks' );
+
     n.unbind( 'click', clicker );
 
     n.trigger( 'click' );
-    equal( clicked, 1, '... still one click' );
+    equal( clicked, 2, '... still two clicks' );
+
+    n2.trigger( 'click' );
+    equal( clicked, 3, '... now three clicks' );
 
 });
